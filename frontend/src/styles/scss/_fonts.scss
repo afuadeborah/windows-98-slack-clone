@@ -19,13 +19,18 @@
 }
 
 h1.title-bar-text, 
-.post__container h2 {
+.post__container h2,
+h2.title-bar-text {
     font-size: 0.8rem;
     margin: 0;
 }
 
 h2 {
     font-weight: bold;
+}
+
+p {
+    margin-bottom: 0;
 }
 
 

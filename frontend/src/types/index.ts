@@ -1,4 +1,4 @@
-// src/types/index.ts
+import React from 'react';
 
 export interface PostType {
   id: number;

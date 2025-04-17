@@ -52,56 +52,52 @@ const SelectedPost = ({
 	}, [post.id]);
 
 	return (
-		<>
-			<div style={{ padding: "20px" }}>
-				<button
-					style={{ cursor: "pointer" }}
-					onClick={() => setSelectedPost(null)}
-				>
-					Back
-				</button>
-				<h2
-					style={{
-						fontSize: "1.5em",
-						fontWeight: "700",
-						marginBottom: "10px",
-					}}
-				>
-					{post.title}
-				</h2>
-				<p style={{ marginBottom: "10px" }}>{post.content}</p>
-				<p>
-					<strong>Author:</strong> {post.author}
-				</p>
-				<p>
-					<strong>Posted on:</strong>{" "}
-					{new Date(post.createdAt).toLocaleDateString()}
-				</p>
-				<div
-					style={{
-						display: "flex",
-						flexDirection: "column",
-						marginTop: "20px",
-					}}
-				>
-					{comments.map((comment, index) => (
-						<Comment
-							key={comment.id}
-							comment={comment}
-							firstComment={index === 0}
-						/>
-					))}
+		<div className='m-4'>
+			<button onClick={() => setSelectedPost(null)}>Back</button>
+
+			<div className='window mt-4'>
+				<div className='title-bar'>
+					<h2 className='title-bar-text'> {post.title}</h2>
+					<div className='title-bar-controls'>
+						<button aria-label='Minimize'></button>
+						<button aria-label='Maximize' disabled></button>
+						<button aria-label='Close'></button>
+					</div>
 				</div>
-				{hasNextPage && (
-					<button
-						style={{ cursor: "pointer" }}
-						onClick={fetchMoreComments}
-					>
-						Fetch more comments
-					</button>
-				)}
+
+				<div className='d-flex flex-column bg-white'>
+					<div className='d-flex mt-2'>
+						<p className='selected-post__author'>{post.author}</p>
+						<p className='text-secondary'>
+							{new Date(post.createdAt).toLocaleDateString()}
+						</p>
+					</div>
+					<p className='my-2'>{post.content}</p>
+
+					<div className='d-flex flex-column mt-3'>
+						{comments.map((comment, index) => (
+							<Comment
+								key={comment.id}
+								comment={comment}
+								firstComment={index === 0}
+							/>
+						))}
+					</div>
+
+					{hasNextPage && (
+						<button onClick={fetchMoreComments}>
+							Fetch more comments
+						</button>
+					)}
+				</div>
+
+				<div className='status-bar'>
+					<p className='status-bar-field'>Press F1 for help</p>
+					<p className='status-bar-field'>Slide 2</p>
+					<p className='status-bar-field'>CPU Usage: 22%</p>
+				</div>
 			</div>
-		</>
+		</div>
 	);
 };
 

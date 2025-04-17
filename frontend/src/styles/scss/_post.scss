@@ -1,4 +1,9 @@
 // Posts Page and Posts
+.post__container .post__information, 
+.selected-post__author {
+    font-weight: bold;
+}
+
 .post__container {
     cursor: pointer;
     
@@ -9,8 +14,6 @@
 
 
     .post__information {
-        font-weight: bold;
-
         &:active {
             color: $white;
         }
@@ -43,4 +46,9 @@
         width: 20px;
         height: 20px;
     }
+}
+
+// Selected Post
+.selected-post__author {
+    margin-right: 8px;
 }
