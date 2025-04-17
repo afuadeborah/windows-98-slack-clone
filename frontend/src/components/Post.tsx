@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { PostType } from "../types";
+import msnIcon from "../styles/images/msn-icon.png";
 
 const Post = ({
 	post,
@@ -10,9 +11,9 @@ const Post = ({
 	setSelectedPost: (post: PostType | null) => void;
 	deletedPost: (post: PostType | null) => void;
 }) => {
-	console.log("calamari", post);
 	const [loading, setLoading] = useState(false);
 	const [isDeleting, setIsDeleting] = useState(false);
+	const [showTimestamp, setShowTimestamp] = useState(false);
 
 	const handleDeletePost = async (event: React.FormEvent) => {
 		event.preventDefault();
@@ -40,44 +41,46 @@ const Post = ({
 
 	return (
 		<div
-			style={{
-				border: "1px solid #ccc",
-				borderRadius: "5px",
-				padding: "0px 20px",
-				cursor: "pointer",
-				userSelect: "none",
-			}}
+			className='post__container p-1 d-flex justify-content-between align-content-center'
+			title={`View ${post.title}`}
+			onClick={() => setSelectedPost(post)}
 		>
-			<div onClick={() => setSelectedPost(post)}>
-				<h2
-					style={{
-						fontSize: "1.5em",
-						fontWeight: "700",
-						marginBottom: "10px",
+			<div className='flex-grow-1'>
+				<div className='d-flex mb-1 align-items-center'>
+					<div className='post__icon'>
+						<img src={msnIcon} alt='MSN Icon' />
+					</div>
+					<p
+						className='post__information post-information__timestamp-parent'
+						onMouseEnter={() => setShowTimestamp(true)}
+						onMouseLeave={() => setShowTimestamp(false)}
+					>
+						{post.author}
+						{showTimestamp && (
+							<span className='post__timestamp'>
+								{new Date(post.createdAt).toLocaleString()}
+							</span>
+						)}
+					</p>
+				</div>
+				<p className='post__information mb-0'>{post.title}</p>
+				<p className='mb-0'>{post.content}</p>
+			</div>
+			<div>
+				<button
+					disabled={loading}
+					onClick={(e) => {
+						setIsDeleting(true);
+						window.confirm(
+							"Are you sure you want to delete this post?"
+						)
+							? handleDeletePost(e)
+							: setIsDeleting(false);
 					}}
 				>
-					{post.title}
-				</h2>
-				<p style={{ marginBottom: "10px" }}>{post.content}</p>
-				<p>
-					<strong>Author:</strong> {post.author}
-				</p>
-				<p>
-					<strong>Posted on:</strong>{" "}
-					{new Date(post.createdAt).toLocaleDateString()}
-				</p>
+					Delete
+				</button>
 			</div>
-			<button
-				disabled={loading}
-				onClick={(e) => {
-					setIsDeleting(true);
-					window.confirm("Are you sure you want to delete this post?")
-						? handleDeletePost(e)
-						: setIsDeleting(false);
-				}}
-			>
-				Delete
-			</button>
 		</div>
 	);
 };

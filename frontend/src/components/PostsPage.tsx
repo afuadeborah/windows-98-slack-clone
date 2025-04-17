@@ -81,11 +81,31 @@ const PostsPage = () => {
 	};
 
 	return (
-		<div style={{ padding: 10 }}>
-			<h1>Posts</h1>
-			<div style={{ margin: "20px" }}>
-				<form onSubmit={handleCreatePost}>
-					<strong>Add Post</strong>
+		<div className='window m-4'>
+			<div className='title-bar'>
+				<h1 className='title-bar-text'>Slack - Posts</h1>
+				<div className='title-bar-controls'>
+					<button aria-label='Minimize'></button>
+					<button aria-label='Maximize' disabled></button>
+					<button aria-label='Close'></button>
+				</div>
+			</div>
+			<div className='post-page__container d-flex flex-column bg-white mb-3 py-1'>
+				{posts.map((post) => (
+					<Post
+						key={post.id}
+						post={post}
+						setSelectedPost={setSelectedPost}
+						deletedPost={deletedPost}
+					/>
+				))}
+			</div>
+			<div className='m-3'>
+				<form
+					className='d-flex flex-column'
+					onSubmit={handleCreatePost}
+				>
+					<strong className='mb-3'>Add Post</strong>
 					<label htmlFor='title'>Title</label>
 					<input
 						type='text'
@@ -97,31 +117,23 @@ const PostsPage = () => {
 					<textarea
 						name='content'
 						id='content'
+						maxLength={500}
 						value={content}
 						onChange={(e) => setContent(e.target.value)}
 					/>
-					<button type='submit' disabled={loading}>
+					<button
+						className='mt-sm-3'
+						type='submit'
+						disabled={loading}
+					>
 						Create post
 					</button>
 				</form>
 			</div>
-			<div
-				style={{
-					display: "flex",
-					flexDirection: "column",
-					marginBottom: "20px",
-					backgroundColor: "#fff",
-					gap: "20px",
-				}}
-			>
-				{posts.map((post) => (
-					<Post
-						key={post.id}
-						post={post}
-						setSelectedPost={setSelectedPost}
-						deletedPost={deletedPost}
-					/>
-				))}
+			<div className='status-bar'>
+				<p className='status-bar-field'>Press F1 for help</p>
+				<p className='status-bar-field'>Slide 1</p>
+				<p className='status-bar-field'>CPU Usage: 44%</p>
 			</div>
 		</div>
 	);
