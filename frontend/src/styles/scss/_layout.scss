@@ -1,0 +1,36 @@
+html {
+    overflow-x: auto;
+    white-space: wrap;
+}
+
+body {
+    background-color: $bg-color;
+}
+
+.window {
+    max-width: 800px;
+}
+
+.status-bar {
+    background-color: $gray;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: $gray;
+}
+
+.footer__start-button {
+    font-weight: 700;
+    min-width: 59px;
+    margin-right: 6px;
+}
+
+.footer__time-box {
+    text-align: right;
+    min-width: 150px;
+}

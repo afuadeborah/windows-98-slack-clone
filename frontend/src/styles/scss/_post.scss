@@ -1,0 +1,46 @@
+// Posts Page and Posts
+.post__container {
+    cursor: pointer;
+    
+    &:active {
+        background-color: $active-blue;
+        color: $white;
+    }
+
+
+    .post__information {
+        font-weight: bold;
+
+        &:active {
+            color: $white;
+        }
+    }
+}
+
+.post-information__timestamp-parent {
+    position: relative;
+    margin-bottom: 0;
+}
+
+.post__timestamp {
+    position: absolute;
+    top: 0;
+    left: 70px;
+    background-color: #ffffcc;
+    color: $black;
+    padding: 2px 5px;
+    border: 1px solid $black;
+    z-index: 10;
+    box-shadow: inset -1px -1px $black, inset 1px 1px $white, inset -2px -2px grey, inset 2px 2px #dfdfdf;
+    font-size: 10px;
+    min-width: 150px;
+}
+
+.post__icon {
+    display: flex;
+    margin-right: 8px;
+    img {
+        width: 20px;
+        height: 20px;
+    }
+}
