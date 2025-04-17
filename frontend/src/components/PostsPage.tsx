@@ -2,6 +2,9 @@ import React, { useState, useEffect, FormEvent } from "react";
 import { PostType } from "../types";
 import Post from "./Post";
 import SelectedPost from "./SelectedPost";
+import computerIcon from "../styles/images/computer-explorer.png";
+import solitaireIcon from "../styles/images/solitaire.png";
+import recycleIcon from "../styles/images/recycle-bin.png";
 
 const fetchPosts = async (): Promise<PostType[]> => {
 	const response = await fetch("/api/posts");
@@ -81,59 +84,90 @@ const PostsPage = () => {
 	};
 
 	return (
-		<div className='window m-4'>
-			<div className='title-bar'>
-				<h1 className='title-bar-text'>Slack - Posts</h1>
-				<div className='title-bar-controls'>
-					<button aria-label='Minimize'></button>
-					<button aria-label='Maximize' disabled></button>
-					<button aria-label='Close'></button>
+		<div className='d-md-flex justify-content-between'>
+			<div className='window flex-grow-1 m-4'>
+				<div className='title-bar'>
+					<h1 className='title-bar-text'>Slack - Posts</h1>
+					<div className='title-bar-controls'>
+						<button aria-label='Minimize'></button>
+						<button aria-label='Maximize' disabled></button>
+						<button aria-label='Close'></button>
+					</div>
+				</div>
+
+				<div className='post-page__container d-flex flex-column bg-white mb-3 py-1'>
+					{posts.map((post) => (
+						<Post
+							key={post.id}
+							post={post}
+							setSelectedPost={setSelectedPost}
+							deletedPost={deletedPost}
+						/>
+					))}
+				</div>
+
+				<div className='m-3'>
+					<form
+						className='d-flex flex-column'
+						onSubmit={handleCreatePost}
+					>
+						<strong className='mb-3'>Add Post</strong>
+						<label htmlFor='title'>Title</label>
+						<input
+							type='text'
+							id='title'
+							value={title}
+							onChange={(e) => setTitle(e.target.value)}
+						/>
+						<label htmlFor='content'>Content</label>
+						<textarea
+							name='content'
+							id='content'
+							maxLength={500}
+							value={content}
+							onChange={(e) => setContent(e.target.value)}
+						/>
+						<button
+							className='mt-sm-3'
+							type='submit'
+							disabled={loading}
+						>
+							Create post
+						</button>
+					</form>
+				</div>
+				<div className='status-bar'>
+					<p className='status-bar-field'>Press F1 for help</p>
+					<p className='status-bar-field'>Slide 1</p>
+					<p className='status-bar-field'>CPU Usage: 44%</p>
 				</div>
 			</div>
-			<div className='post-page__container d-flex flex-column bg-white mb-3 py-1'>
-				{posts.map((post) => (
-					<Post
-						key={post.id}
-						post={post}
-						setSelectedPost={setSelectedPost}
-						deletedPost={deletedPost}
+
+			<div className='d-none d-md-flex flex-column flex-shrink-1 window__icon-flex-container'>
+				<div className='window__icon-container text-center text-right'>
+					<img
+						src={computerIcon}
+						className='window__icon'
+						alt='My Computer icon'
 					/>
-				))}
-			</div>
-			<div className='m-3'>
-				<form
-					className='d-flex flex-column'
-					onSubmit={handleCreatePost}
-				>
-					<strong className='mb-3'>Add Post</strong>
-					<label htmlFor='title'>Title</label>
-					<input
-						type='text'
-						id='title'
-						value={title}
-						onChange={(e) => setTitle(e.target.value)}
+					<p className='text-white mb-0 mt-2'>My Computer</p>
+				</div>
+				<div className='window__icon-container text-center mt-4'>
+					<img
+						src={recycleIcon}
+						className='window__icon'
+						alt='Trash icon'
 					/>
-					<label htmlFor='content'>Content</label>
-					<textarea
-						name='content'
-						id='content'
-						maxLength={500}
-						value={content}
-						onChange={(e) => setContent(e.target.value)}
+					<p className='text-white mb-0 mt-2'>Recycle Bin</p>
+				</div>
+				<div className='window__icon-container text-center mt-4'>
+					<img
+						src={solitaireIcon}
+						className='window__icon'
+						alt='Solitaire icon'
 					/>
-					<button
-						className='mt-sm-3'
-						type='submit'
-						disabled={loading}
-					>
-						Create post
-					</button>
-				</form>
-			</div>
-			<div className='status-bar'>
-				<p className='status-bar-field'>Press F1 for help</p>
-				<p className='status-bar-field'>Slide 1</p>
-				<p className='status-bar-field'>CPU Usage: 44%</p>
+					<p className='text-white mb-0 mt-2'>Solitaire</p>
+				</div>
 			</div>
 		</div>
 	);
