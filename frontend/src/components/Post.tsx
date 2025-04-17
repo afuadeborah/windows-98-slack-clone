@@ -38,7 +38,7 @@ const Post = ({
 			setIsDeleting(false);
 		} catch (error) {}
 	};
-	console.log(showTimestamp);
+
 	return (
 		<div
 			className='post__container p-1 d-flex justify-content-between align-content-center'
