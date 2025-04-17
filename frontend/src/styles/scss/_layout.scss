@@ -7,6 +7,10 @@ body {
     background-color: $bg-color;
 }
 
+button {
+    cursor: pointer;
+}
+
 .window {
     max-width: 800px;
 }
@@ -17,6 +21,7 @@ body {
 
 .window__icon-flex-container {
     margin: 24px 24px 0 0;
+
     .window__icon {
         width: 40px;
         height: 40px;
@@ -37,7 +42,7 @@ body {
     border-bottom: 1px solid #4e4e4e;
 
     .footer__start-button {
-        font-weight: 700;
+        font-weight: bold;
         min-width: 59px;
         margin-right: 1px;
         height: 20px;

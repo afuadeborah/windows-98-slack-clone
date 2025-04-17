@@ -63,8 +63,8 @@ const Post = ({
 						)}
 					</p>
 				</div>
-				<p className='post__information mb-0'>{post.title}</p>
-				<p className='mb-0'>{post.content}</p>
+				<p className='post__information'>{post.title}</p>
+				<p>{post.content}</p>
 			</div>
 			<div>
 				<button
