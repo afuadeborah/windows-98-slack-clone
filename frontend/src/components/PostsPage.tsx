@@ -49,6 +49,8 @@ const PostsPage = () => {
 	const handleCreatePost = async (event: React.FormEvent) => {
 		// prevent default
 		event.preventDefault();
+		// fake a userId as we don't have a login
+		const userId = Math.floor(Math.random() * 3) + 1;
 		// set up loading state
 		setLoading(true);
 		try {
@@ -56,7 +58,7 @@ const PostsPage = () => {
 			const response = await fetch("/api/posts", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ title, content, user_id: 1 }),
+				body: JSON.stringify({ title, content, user_id: userId }),
 			});
 			// validate response is ok
 			if (!response.ok)
@@ -79,7 +81,7 @@ const PostsPage = () => {
 	const deletedPost = (deletedPost: PostType | null) => {
 		// go through posts and filter out the post passed into this function from the child
 		if (deletedPost) {
-			setPosts(posts.filter((post) => deletedPost.id === post.id));
+			setPosts(posts.filter((post) => deletedPost.id !== post.id));
 		}
 	};
 

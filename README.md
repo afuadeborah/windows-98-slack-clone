@@ -8,6 +8,16 @@ It was very challenging working on the layout as the Windows 98 UI and most UIs 
 
 This project was also my first go at Python (I've worked primarily in Node and Remix.js for REST API actions) hence the comments in te file to guide/show my logic.
 
+## Screenshots
+
+### Post View
+
+![Post View](./images/post-view.png)
+
+### Comment View
+
+![Comment View](./images/comment-view.png)
+
 ## Stack
 
 -   React
