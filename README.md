@@ -6,7 +6,7 @@ Users can view, create, update, and delete posts and comments.
 
 It was very challenging working on the layout as the Windows 98 UI and most UIs at the time didn't have whitespace, something I'm a _big_ fan of. This was a really fun go at designing a project and a blast from the past. 😎
 
-This project was also my first go at Python (I've worked primarily in Node and Remix.js for REST API actions) hence the comments in te file to guide/show my logic.
+This project was also my first go at Python (I've worked primarily in Node and Remix.js for REST API actions) hence the comments in the file to guide/show my logic.
 
 ## Screenshots
 
