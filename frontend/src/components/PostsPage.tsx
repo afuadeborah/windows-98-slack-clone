@@ -78,6 +78,15 @@ const PostsPage = () => {
 		}
 	};
 
+	// set up a way for the Post component to inform this component of the updated post
+	const updatedPostState = (updatedPost: PostType) => {
+		setPosts((previousPosts) =>
+			previousPosts.map((post) =>
+				post.id === updatedPost.id ? updatedPost : post
+			)
+		);
+	};
+
 	const deletedPost = (deletedPost: PostType | null) => {
 		// go through posts and filter out the post passed into this function from the child
 		if (deletedPost) {
@@ -86,7 +95,7 @@ const PostsPage = () => {
 	};
 
 	return (
-		<div className='d-md-flex justify-content-between'>
+		<div className='d-md-flex justify-content-between mb-4'>
 			<div className='window flex-grow-1 m-4'>
 				<div className='title-bar'>
 					<h1 className='title-bar-text'>Slack - Posts</h1>
@@ -103,6 +112,7 @@ const PostsPage = () => {
 							key={post.id}
 							post={post}
 							setSelectedPost={setSelectedPost}
+							updatedPostState={updatedPostState}
 							deletedPost={deletedPost}
 						/>
 					))}

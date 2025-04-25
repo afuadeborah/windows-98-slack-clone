@@ -36,7 +36,7 @@ const SelectedPost = ({
 
 	const fetchMoreComments = () => {
 		if (hasNextPage) {
-			const pagesFetched = comments.length / PAGE_SIZE;
+			const pagesFetched = Math.ceil(comments.length / PAGE_SIZE);
 			const nextPage = pagesFetched + 1;
 			fetchCommentsForPost(post.id, nextPage).then((comments) => {
 				setComments((prevComments) => [...prevComments, ...comments]);
