@@ -12,11 +12,11 @@ This project was also my first go at Python (I've worked primarily in Node and R
 
 ### Post View
 
-![Post View](./images/post-view.png)
+![Post View](./frontend/src/styles/images/desktop-screenshot.png)
 
 ### Comment View
 
-![Comment View](./images/comment-view.png)
+![Comment View](./frontend/src/styles/images/comment-view.png)
 
 ## Stack
 
