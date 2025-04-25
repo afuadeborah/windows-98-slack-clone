@@ -91,7 +91,7 @@ def add_post() -> Response:
             "content": new_post.content,
             "createdAt": new_post.created_at,
             "author": user.username,
-        }})
+        }}), 201
 
 
 # UPDATE a post
@@ -100,18 +100,23 @@ def add_post() -> Response:
 def update_post(id: int) -> Response:
 # set up request data
     data = request.get_json(); 
+
 # validate post exists at that id
     post = Post.query.get(id);
     if not post or post.id != id:
         return jsonify({"error": "Post was not found"}), 404
+    
 # validate required fields
     if not data or "title" not in data or "content" not in data:
         return jsonify({"error": "Title and content is required"}), 400
+    
 # update fields
     title = data["title"]
     content = data["content"]
+
 # commit
     db.session.commit()
+
 # return json response
     return jsonify({"message": "Post successfully updated.", "post": {
         "id": post.id,
@@ -129,11 +134,14 @@ def delete_post(id: int) -> Response:
     post = Post.query.get(id)
     if not post or post.id != id:
         return jsonify({"error": "Post not found."}), 404
+    
 # delete and commit
     db.session.delete(post)
     db.session.commit()
+
 # return json response
     return jsonify({"message": "Post successfully deleted."}), 200
+
 
 # POST a new comment
 @posts.route("/posts/<int:id>/comments", methods=["POST"])
@@ -141,6 +149,7 @@ def delete_post(id: int) -> Response:
 def create_comment(id: int) -> Response: 
 # set up request data
     data = request.get_json()
+
 # verify the post and user exist at an id
     post = Post.query.get(id)
     if not post:
@@ -149,18 +158,22 @@ def create_comment(id: int) -> Response:
     user = User.query.get(data["user_id"])
     if not user:
         return jsonify({"error": "User not found."}), 404
+    
 # validate required fields
     if not data or "content" not in data or "user_id" not in data or "post_id" not in data:
         return jsonify({"error": "Content, user id, and post id are required."}), 400
+    
 # create new comment
     new_comment = Comment(
         content=data["content"],
         user_id=data["user_id"],
         post_id=id
     )
+
 # add and commit
     db.session.add(new_comment)
     db.session.commit()
+
 # return json response
     return jsonify({
         "message": "Comment created successfully.",
@@ -172,12 +185,53 @@ def create_comment(id: int) -> Response:
             "createdAt": new_comment.created_at,
             "author": user.username,
         }
-    })
+    }), 201
+
+
+# UPDATE a comment 
+@posts.route("/posts/<int:postId>/comments/<int:commentId>", methods=["PUT"])
+# define function and access request
+def update_comment(postId: int, commentId: int) -> Response:
+# set up data
+    data = request.get_json()
+
+# validate required fields
+    if not data or "content" not in data:
+        return jsonify({"error": "Content is required."}), 400
+    
+# validate post and comment exists at the specific ids
+    post = Post.query.get(postId)
+    if not post:
+        return jsonify({"error": "Post not found."}), 404
+    
+    comment = Comment.query.get(commentId)
+    if not comment or comment.post.id != postId:
+        return jsonify({"error": "Comment not found for this post."}), 404
+    
+# update field
+    comment.content = data["content"]
+
+# commit
+    db.session.commit()
+
+# return json response
+    return jsonify({
+        "message": "Comment successfully updated.", 
+        "comment": {
+            "id": comment.id,
+            "content": comment.content,
+            "userId": comment.user_id,
+            "createdAt": comment.created_at,
+            "author": comment.author.username
+        }
+    }), 200
+
 
 # DELETE a comment
 @posts.route("/posts/<int:postId>/comments/<int:commentsId>", methods=["DELETE"])
-# define function and access response
+# define function and access request
 def delete_comment(postId: int, commentId: int) -> Response:
+
 # validate the post and comment exist at the specific ids
     comment = Comment.query.get(commentId)
     if not comment:
@@ -186,8 +240,10 @@ def delete_comment(postId: int, commentId: int) -> Response:
     post = Post.query.get(postId)
     if not post or postId != post.id:
         return jsonify({"error": "Post not found."}), 404
+    
 # pass in comment, add and commit
     db.session.delete(comment)
     db.session.commit()
+    
 # return json message
     return jsonify({"message: Comment successfully deleted."}), 200
